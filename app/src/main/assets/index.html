@@ -4,82 +4,193 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>HOT WHEEL</title>
+
 <style>
 :root{--y:#ffd400;--bg:#050505;--card:#111;--muted:#a9a9a9}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
 .wrap{max-width:720px;margin:auto;padding:18px 16px 34px}
-.hero{padding:20px 4px 8px}.brand{font-size:38px;font-weight:900;letter-spacing:1px;color:var(--y)}
-.sub{color:#fff;font-weight:700;letter-spacing:2px}.place{color:#aaa;margin-top:7px}
+.hero{padding:20px 4px 8px}
+.brand{font-size:38px;font-weight:900;letter-spacing:1px;color:var(--y)}
+.sub{color:#fff;font-weight:700;letter-spacing:2px}
+.place{color:#aaa;margin-top:7px}
 .card{background:linear-gradient(145deg,#171717,#0d0d0d);border:1px solid #292929;border-radius:20px;padding:16px;margin-top:18px;box-shadow:0 12px 30px #000}
-.card h2{margin:4px 0 8px}.price{color:var(--y);font-size:23px;font-weight:800}.muted{color:var(--muted);font-size:13px}
+.card h2{margin:4px 0 8px}
+.price{color:var(--y);font-size:23px;font-weight:800}
+.muted{color:var(--muted);font-size:13px}
 .photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .photos img{width:100%;height:180px;object-fit:cover;border-radius:15px;border:1px solid #292929}
 label{display:block;margin-top:12px;color:#ddd;font-size:13px}
 select,input{width:100%;margin-top:6px;padding:14px;border-radius:12px;border:1px solid #333;background:#0a0a0a;color:#fff;font-size:15px}
 .total{font-size:25px;font-weight:900;color:var(--y);margin-top:16px}
 .btn{width:100%;border:0;border-radius:13px;padding:15px;margin-top:12px;font-weight:900;font-size:16px;cursor:pointer}
-.wa{background:var(--y);color:#050505}.call{background:#222;color:#fff;border:1px solid #333}
+.wa{background:var(--y);color:#050505}
+.call{background:#222;color:#fff;border:1px solid #333}
 .note{font-size:12px;line-height:1.5;color:#999;margin-top:13px}
 .footer{text-align:center;color:#777;font-size:12px;margin-top:25px}
 </style>
 </head>
+
 <body>
 <div class="wrap">
-  <section class="hero">
-    <div class="brand">HOT WHEEL</div>
-    <div class="sub">SELF DRIVE BIKES & SCOOTERS</div>
-    <div class="place">BHUBANESWAR • RIDE YOUR WAY</div>
-  </section>
 
-  <div class="card">
-    <h2>Our Fleet</h2>
-    <div class="muted">Choose only Bike or Scooty. Exact model is subject to availability.</div>
-    <div class="photos">
-      <img src="IMG_1092_Original(1).jpeg">
-      <img src="IMG_1093_Original(1).jpeg">
-    </div>
-  </div>
+<section class="hero">
+<div class="brand">HOT WHEEL</div>
+<div class="sub">SELF DRIVE BIKES & SCOOTERS</div>
+<div class="place">BHUBANESWAR • RIDE YOUR WAY</div>
+</section>
 
-  <div class="card">
-    <h2>Book Your Ride</h2>
-    <label>Ride Type</label>
-    <select id="ride" onchange="calc()">
-      <option value="scooty">Scooty</option>
-      <option value="bike">Bike</option>
-    </select>
-    <label>Duration</label>
-    <select id="duration" onchange="calc()">
-      <option value="1">1 Hour</option>
-      <option value="12">12 Hours</option>
-      <option value="24">24 Hours</option>
-    </select>
-    <label>Name</label><input id="name" placeholder="Your name">
-    <label>Mobile</label><input id="mobile" type="tel" placeholder="Mobile number">
-    <label>Date</label><input id="date" type="date">
-    <label>Pickup Time</label><input id="time" type="time">
-    <label>Pickup Location</label><input id="pickup" placeholder="Bhubaneswar">
-    <div class="total">₹<span id="fare">600</span></div>
-    <button class="btn wa" onclick="book()">REQUEST BOOKING ON WHATSAPP</button>
-    <button class="btn call" onclick="location.href='tel:+918249528073'">CALL HOT WHEEL</button>
-    <div class="note">Vehicle model is subject to availability. Available vehicle will be provided at pickup.</div>
-  </div>
+<div class="card">
+<h2>Our Fleet</h2>
+<div class="muted">Choose only Bike or Scooty. Exact model is subject to availability.</div>
 
-  <div class="footer">HOT WHEEL • Self Drive Bikes & Scooters • Bhubaneswar<br>WhatsApp: 8249528073</div>
+<div class="photos">
+<img src="IMG_1092_Original(1).jpeg">
+<img src="IMG_1093_Original(1).jpeg">
 </div>
-<script>
-function calc(){
-  const r=document.getElementById('ride').value,d=document.getElementById('duration').value;
-  const p=r==='scooty'?({1:60,12:400,24:600}):({1:80,12:600,24:900});
-  document.getElementById('fare').textContent=p[d];
-}
-function book(){
-  const r=document.getElementById('ride').value==='scooty'?'Scooty':'Bike';
-  const d=document.getElementById('duration').value;
-  const dur=d==='1'?'1 Hour':d==='12'?'12 Hours':'24 Hours';
-  const fare=document.getElementById('fare').textContent;
-  const msg=`🏍️ HOT WHEEL BOOKING REQUEST
+</div>
 
-Ride: ${r}
+<div class="card">
+<h2>Book Your Ride</h2>
+
+<label>Ride Type</label>
+<select id="ride" onchange="updateDuration()">
+<option value="scooty">Scooty</option>
+<option value="bike">Bike</option>
+</select>
+
+<label>Duration</label>
+<select id="duration" onchange="calc()"></select>
+
+<label>Name</label>
+<input id="name" placeholder="Your name">
+
+<label>Mobile</label>
+<input id="mobile" type="tel" placeholder="Mobile number">
+
+<label>Date</label>
+<input id="date" type="date">
+
+<label>Pickup Time</label>
+<input id="time" type="time">
+
+<label>Pickup Location</label>
+<input id="pickup" placeholder="Bhubaneswar">
+
+<div class="total">₹<span id="fare">210</span></div>
+
+<button class="btn wa" onclick="book()">REQUEST BOOKING ON WHATSAPP</button>
+
+<button class="btn call" onclick="location.href='tel:+918249528073'">
+CALL HOT WHEEL
+</button>
+
+<div class="note">
+Scooty minimum booking: 3 hours.<br>
+Bike minimum booking: 4 hours.<br>
+Vehicle model is subject to availability. Available vehicle will be provided at pickup.
+</div>
+
+</div>
+
+<div class="footer">
+HOT WHEEL • Self Drive Bikes & Scooters • Bhubaneswar<br>
+WhatsApp: 8249528073
+</div>
+
+</div>
+
+<script>
+
+function updateDuration(){
+
+const ride=document.getElementById('ride').value;
+const duration=document.getElementById('duration');
+
+duration.innerHTML='';
+
+if(ride==='scooty'){
+
+duration.innerHTML=`
+<option value="3">3 Hours</option>
+<option value="4">4 Hours</option>
+<option value="5">5 Hours</option>
+<option value="6">6 Hours</option>
+<option value="7">7 Hours</option>
+<option value="8">8 Hours</option>
+<option value="9">9 Hours</option>
+<option value="10">10 Hours</option>
+<option value="11">11 Hours</option>
+<option value="12">12 Hours</option>
+<option value="24">24 Hours</option>
+`;
+
+}else{
+
+duration.innerHTML=`
+<option value="4">4 Hours</option>
+<option value="5">5 Hours</option>
+<option value="6">6 Hours</option>
+<option value="7">7 Hours</option>
+<option value="8">8 Hours</option>
+<option value="9">9 Hours</option>
+<option value="10">10 Hours</option>
+<option value="11">11 Hours</option>
+<option value="12">12 Hours</option>
+<option value="24">24 Hours</option>
+`;
+
+}
+
+calc();
+}
+
+function calc(){
+
+const ride=document.getElementById('ride').value;
+const d=parseInt(document.getElementById('duration').value);
+
+let fare=0;
+
+if(ride==='scooty'){
+
+if(d===12){
+fare=500;
+}else if(d===24){
+fare=700;
+}else{
+fare=d*70;
+}
+
+}else{
+
+if(d===12){
+fare=800;
+}else if(d===24){
+fare=1000;
+}else{
+fare=d*100;
+}
+
+}
+
+document.getElementById('fare').textContent=fare;
+
+}
+
+function book(){
+
+const ride=document.getElementById('ride').value==='scooty'?'Scooty':'Bike';
+
+const d=parseInt(document.getElementById('duration').value);
+
+const dur=d===24?'24 Hours':d===12?'12 Hours':d+' Hours';
+
+const fare=document.getElementById('fare').textContent;
+
+const msg=`🏍️ HOT WHEEL BOOKING REQUEST
+
+Ride: ${ride}
 Duration: ${dur}
 Date: ${document.getElementById('date').value||'-'}
 Time: ${document.getElementById('time').value||'-'}
@@ -90,9 +201,14 @@ Fare: ₹${fare}
 
 Please confirm availability.
 Vehicle model is subject to availability.`;
-  location.href='https://wa.me/918249528073?text='+encodeURIComponent(msg);
+
+location.href='https://wa.me/918249528073?text='+encodeURIComponent(msg);
+
 }
-calc();
+
+updateDuration();
+
 </script>
+
 </body>
 </html>
