@@ -2,51 +2,67 @@ package com.hotwheel.selfdrive;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.graphics.Color;
-import android.view.View;
+import android.widget.ImageView;
 import android.content.Intent;
 import android.net.Uri;
 
 public class MainActivity extends Activity {
 
+    private final Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WebView web = new WebView(this);
-        web.setBackgroundColor(Color.BLACK);
+        ImageView splash = new ImageView(this);
+        splash.setImageResource(R.drawable.hot_wheel_splash);
+        splash.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        splash.setBackgroundColor(Color.BLACK);
 
-        WebSettings settings = web.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAllowFileAccess(true);
-        settings.setAllowContentAccess(true);
+        setContentView(splash);
 
-        web.setWebViewClient(new WebViewClient() {
+        handler.postDelayed(() -> {
 
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            WebView web = new WebView(this);
+            web.setBackgroundColor(Color.BLACK);
+
+            WebSettings settings = web.getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setDomStorageEnabled(true);
+            settings.setAllowFileAccess(true);
+            settings.setAllowContentAccess(true);
+
+            web.setWebViewClient(new WebViewClient() {
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    openExternal(url);
+                    return true;
+                }
+
+                @Override
+                public boolean shouldOverrideUrlLoading(
+                        WebView view,
+                        android.webkit.WebResourceRequest request) {
+                    openExternal(request.getUrl().toString());
+                    return true;
+                }
+            });
+
+            web.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
                 openExternal(url);
-                return true;
-            }
+            });
 
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, android.webkit.WebResourceRequest request) {
-                openExternal(request.getUrl().toString());
-                return true;
-            }
-        });
+            setContentView(web);
 
-        web.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
-            openExternal(url);
-        });
+            web.loadUrl("file:///android_asset/index.html");
 
-        setContentView(web);
-
-        web.loadUrl("file:///android_asset/index.html");
+        }, 1600);
     }
 
     private void openExternal(String url) {
