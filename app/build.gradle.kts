@@ -19,4 +19,3 @@ android {
              
         isMinifyEnabled = false
     }
-}
